@@ -29,7 +29,7 @@ function verse(number){
   var latestAnimal = keys[number-1];
   var output = start + latestAnimal + ".\n";
 
-  if(number!==8){
+  if(number !== Object.keys(text).length){
     output += text[latestAnimal];
     for(var i = number-1; i>0; i--){
       output += middle_part(i);
