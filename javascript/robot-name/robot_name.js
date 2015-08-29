@@ -20,7 +20,7 @@ function generateName(){
 
 function generateNumbers(){
   var result = "00"+Math.floor(Math.random()*999);
-  return result.substr(result.length - 3);
+  return result.slice(-3);
 };
 
 function generateLetters(){
