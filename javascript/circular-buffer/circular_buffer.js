@@ -15,10 +15,10 @@ function Buffer(size){
 }
 
 Buffer.prototype.read = function(){
-  if(this.newestIndex === -1){
+  var result = this.buffer[this.oldestIndex];
+  if(result === null){
     throw new bufferEmptyException();
   } else {
-    var result = this.buffer[this.oldestIndex];
     this.buffer[this.oldestIndex] = null;
     this.update("oldestIndex");
     return result;
@@ -38,6 +38,7 @@ Buffer.prototype.write = function(input){
 
 Buffer.prototype.forceWrite = function(input){
   this.buffer[this.oldestIndex] = input;
+  this.newestIndex = this.oldestIndex;
   this.update("oldestIndex");
 }
 
