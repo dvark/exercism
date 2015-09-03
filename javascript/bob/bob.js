@@ -10,10 +10,10 @@ Bob.prototype.hey = function(input) {
     return "Whoa, chill out!";
   } else if(input.slice(-1)==="?"){ 
     return "Sure.";
-  } 
+  }
   else if(/^\s*$/.test(input)){ 
     return "Fine. Be that way!";
-  } 
+  }
   else {
     return "Whatever.";
   }

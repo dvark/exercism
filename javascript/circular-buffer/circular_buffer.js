@@ -1,3 +1,6 @@
+// Refactores version with array methods,
+// seen in one of the other solutions
+
 function circularBuffer(size){
   return new Buffer(size);
 }
@@ -6,48 +9,33 @@ function bufferEmptyException(){};
 function bufferFullException(){};
 
 function Buffer(size){
-  this.newestIndex = -1;
-  this.oldestIndex = 0;
+  this.size = size;
   this.buffer = [];
-  for(var i=0; i<size; i++){
-    this.buffer.push(null);
-  }
 }
 
 Buffer.prototype.read = function(){
-  var result = this.buffer[this.oldestIndex];
-  if(result === null){
+  if(this.buffer.length === 0){
     throw new bufferEmptyException();
   } else {
-    this.buffer[this.oldestIndex] = null;
-    this.update("oldestIndex");
-    return result;
+    return this.buffer.shift();
   }
 }
 
 Buffer.prototype.write = function(input){
-  if(input){
-    this.update("newestIndex");
-    if (this.buffer[this.newestIndex]) {
-      throw new bufferFullException();
-    } else {
-      this.buffer[this.newestIndex] = input;
-    }
+  if (this.buffer.length >= this.size) {
+    throw new bufferFullException();
+  } else if(input){
+    this.buffer.push(input);
   }
 }
 
 Buffer.prototype.forceWrite = function(input){
-  this.buffer[this.oldestIndex] = input;
-  this.newestIndex = this.oldestIndex;
-  this.update("oldestIndex");
+  this.buffer.shift();
+  this.buffer.push(input);
 }
 
 Buffer.prototype.clear = function(input){
   Buffer.call(this,this.buffer.length);
-}
-
-Buffer.prototype.update = function(index){
-  this[index] = (this[index]+1)%this.buffer.length;
 }
 
 module.exports = {
