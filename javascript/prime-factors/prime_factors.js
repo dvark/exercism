@@ -1,10 +1,8 @@
 module.exports = new PrimeFactors();
 
-function PrimeFactors(){
-}
+function PrimeFactors(){}
 
-PrimeFactors.prototype.for = function(input){
-  var number = input;
+PrimeFactors.prototype.for = function(number){
   var factors = [];
   for(var i=2; i<=number; i++){
     while(number%i===0){
@@ -12,5 +10,6 @@ PrimeFactors.prototype.for = function(input){
       factors.push(i);
     }
   }
+ 
   return factors;
 }

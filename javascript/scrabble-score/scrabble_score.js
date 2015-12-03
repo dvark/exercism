@@ -1,4 +1,15 @@
-var transform = require("../etl/etl");
+function transform(old){
+  var result = {};
+  
+  Object.keys(old).forEach(function(key){
+    var letters = old[key];
+    letters.forEach(function(letter){
+      result[letter.toLowerCase()] = parseInt(key);
+    })
+  })
+
+  return result;
+}
 
 var scores_old = {
   1: [ "A", "E", "I", "O", "U", "L", "N", "R", "S", "T" ],
@@ -13,10 +24,9 @@ var scores_old = {
 var scores = transform(scores_old);
 
 module.exports = function score(input){
-  var word = (input || "").toLowerCase();
+  var wordAsArray = (input || "").toLowerCase().split('');
   var result = 0;
-  for(var i=0; i<word.length; i++){
-    result+= scores[word[i]];
-  }
-  return result;
+  return wordAsArray.reduce(function(sum,element){
+    return sum += scores[element];
+  },0)
 }

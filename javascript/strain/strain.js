@@ -1,21 +1,18 @@
 function keep(array, func){
-  var result = [];
-  array.forEach(function(element){
-    if(func(element)){
-      result.push(element);
-    }
-  })
-  return result
+  return filter(array,func);
 }
 
 function discard(array, func){
-  var result = [];
-  array.forEach(function(element){
-    if(!func(element)){
+  return filter(array, function(element){ return !func(element); })
+}
+
+function filter(array, func){
+  return array.reduce(function(result, element){
+    if(func(element)){
       result.push(element);
     }
-  })
-  return result
+    return result;
+  },[]);
 }
 
 module.exports = {

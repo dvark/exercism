@@ -7,7 +7,7 @@ var map = {
   32: "chocolate",
   64: "pollen",
   128: "cats"
-}
+};
 
 function Allergies(score){
   this.score = score;
@@ -24,16 +24,12 @@ Allergies.prototype.list = function(){
       }
       score-=key;
     }
-  })
+  });
   return result;
-}
+};
 
 Allergies.prototype.allergicTo = function(name){
-  if(this.list().indexOf(name) === -1){
-    return false;
-  } else {
-    return true;
-  }
-}
+  if(this.list().indexOf(name) > -1) return true;
+};
 
 module.exports = Allergies;

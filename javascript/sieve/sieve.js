@@ -16,7 +16,7 @@ function primes(max){
       var j = 2;
       while(result[i]*j<=max){
         var index = result.indexOf(result[i]*j);
-        if(index !== -1) { result.splice(index,1) }
+        if(index !== -1) result.splice(index,1);
         j++;
       }
     }
@@ -25,11 +25,9 @@ function primes(max){
 }
 
 function isPrime(number){
-  if(number === 2) { return true; }
-  for(var i=2; i<number; i++){
-    if(number%i===0){
-      return false
-    }
+  if(number === 2) return true;
+  for(var i=2; i<Math.sqrt(number); i++){
+    if(number%i===0) return false;
   }
   return true;
 }

@@ -1,14 +1,12 @@
 function Binary(input){
-  this.string = input;
+  this.binaryArray = input.split('');
 }
 
 Binary.prototype.toDecimal = function(){
-  var result = 0;
-  for(var i=0; i<this.string.length; i++){
-    var exponent = this.string.length - 1 - i;
-    result+= Math.pow(2,exponent)*parseInt(this.string[i]);
-  }
-  return result || 0;
+  return this.binaryArray.reduce(function(result, element, index, array){
+    var exponent = array.length - 1 - index;
+    return result += Math.pow(2,exponent) * parseInt(element);
+  },0) || 0;
 }
 
 module.exports = Binary;

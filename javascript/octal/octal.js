@@ -1,15 +1,13 @@
 function Octal(input){
-  this.string = input;
+  this.octalArray = input.split('');
 }
 
 Octal.prototype.toDecimal = function(){
-  if(/[^0-7]/.test(this.string)) return 0;
-  var result = 0;
-  for(var i=0; i<this.string.length; i++){
-    var exponent = this.string.length - 1 - i;
-    result+= Math.pow(8,exponent)*parseInt(this.string[i]);
-  }
-  return result;
-}
+  if(/[^0-7]/.test(this.octalArray.join(''))) return 0;
+  return this.octalArray.reduce(function(result, element, index, array){
+    var exponent = array.length - 1 - index;
+    return result += Math.pow(8,exponent) * parseInt(element);
+  },0) || 0;
+};
 
 module.exports = Octal;
