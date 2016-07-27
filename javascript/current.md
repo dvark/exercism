@@ -1,1 +1,1 @@
-isogram
+pangram
