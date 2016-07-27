@@ -1,1 +1,1 @@
-secret handshake
+isogram
