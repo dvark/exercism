@@ -1,1 +1,1 @@
-pangram
+acronym
