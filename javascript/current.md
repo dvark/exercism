@@ -1,1 +1,1 @@
-acronym
+flatten
