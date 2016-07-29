@@ -18,10 +18,8 @@ Series.prototype.largestProduct = function(digits) {
 
     var maxProduct = 0;
     for(var i = 0; i <= this.numberArray.length - digits; i++) {
-        var currentProduct = this.numberArray[i];
-        for(var j = 1; j < digits; j++) {
-            currentProduct *= this.numberArray[i+j];
-        }
+        var slice = this.numberArray.slice(i, i + digits);
+        currentProduct = slice.reduce((product, cur) => {return product * cur;},1)
         if (currentProduct > maxProduct) {
             maxProduct = currentProduct;
         }
