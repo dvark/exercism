@@ -2,7 +2,7 @@ function Series(inputString) {
     if(isNaN(inputString)) {
         throw new Error('Invalid input.');
     }
-    this.numberArray = inputString.split('').map(function(n){return parseInt(n);});
+    this.numberArray = inputString.split('').map((n) => parseInt(n));
 }
 
 Series.prototype.largestProduct = function(digits) {
@@ -11,9 +11,6 @@ Series.prototype.largestProduct = function(digits) {
     }
     if(this.numberArray.length < digits) {
         throw new Error('Slice size is too big.');
-    }
-    if(digits === 0 ) {
-        return 1;
     }
 
     var maxProduct = 0;
