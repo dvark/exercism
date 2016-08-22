@@ -6,17 +6,15 @@ function Bst(data) {
 
 Bst.prototype.insert = function(data) {
     if(data > this.data) {
-        if(this.right === null) {
-            this.right = new Bst(data);
-        } else {
-            this.right.insert(data);
-        }
+        direction = 'right';
     } else {
-        if(this.left === null) {
-            this.left = new Bst(data);
-        } else {
-            this.left.insert(data);
-        }
+        direction = 'left';
+    }
+
+    if(this[direction] === null) {
+        this[direction] = new Bst(data);
+    } else {
+        this[direction].insert(data);
     }
 }
 
