@@ -1,27 +1,23 @@
 function nth(amount) {
-    if(amount < 1) throw new Error('Prime is not possible');
+    if(amount<1) throw new Error('Prime is not possible');
     var counter = 0;
     var prime = 0;
-    var i = 2;
-    while(counter < amount) {
+    for(var i=2; counter<amount; i++){
         if(isPrime(i)) {
             prime = i;
             counter++;
         }
-        i++;
     }
     return prime;
 }
 
 function isPrime(number) {
-    var result = true;
-    for(var i=2; i<=Math.floor(number/2); i++) {
+    for(var i=2; i<=Math.sqrt(number); i++) {
         if(number%i === 0) {
-            result = false;
-            break;
+            return false;
         }
     }
-    return result;
+    return true;
 }
 
 module.exports = {nth};
