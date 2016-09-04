@@ -1,1 +1,1 @@
-binary search
+pascals triangle
