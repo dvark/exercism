@@ -1,29 +1,17 @@
-const map = {
-    '}': '{',
-    ']': '[',
-    ')': '('
-}
-
-const opening = Object.keys(map).map((key) => map[key]);
+const matches = ['{}', '()', '[]'];
 
 module.exports = function bracket(inputString) {
-    const input = inputString.split('');
-    let trackingArray = [];
-
-    for(const i of input) {
-        if(!opening.includes(i) && lastElement(trackingArray) === map[i]) {
-            trackingArray.pop();
+    let stack = [];
+    inputString.split('').forEach((e) => {
+        if(matches.includes(last(stack) + e)) {
+            stack.pop();
         } else {
-            trackingArray.push(i);
+            stack.push(e);
         }
-    }
-
-    if(!trackingArray.length) {
-        return true;
-    }
-    return false;
+    })
+    return stack.length === 0;
 }
 
-function lastElement(array) {
+function last(array) {
     return array[array.length - 1];
 }
