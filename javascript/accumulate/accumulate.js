@@ -1,7 +1,7 @@
 module.exports = function accumulate(array, func){
   var result = [];
-  array.forEach(function(element){
-    result.push(func(element));
-  })
+  for(var i = 0; i < array.length; i++) {
+    result.push(func(array[i]));
+  }
   return result;
 }

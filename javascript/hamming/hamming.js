@@ -3,7 +3,8 @@ function compute(string1, string2){
     throw 'DNA strands must be of equal length.';
   
   return string1.split('').reduce(function(counter, element, index){
-    if(element!==string2[index])  counter++; return counter;
+    if(element!==string2[index])  counter++; 
+    return counter;
   },0);
 }
 
