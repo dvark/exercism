@@ -1,29 +1,25 @@
-module.exports = Luhn;
-
-function Luhn(number){
-  this.number = number;
-  this.checkDigit = number%10;
+function Luhn(number) {
+  this.checkDigit = number % 10;
   this.addends = getAddends(number);
-  this.checksum = getAddends(number).reduce(function(a,b){ return a+b });
-  this.valid = this.checksum%10===0
+  this.checksum = this.addends.reduce((a, b) => a + b);
+  this.valid = this.checksum % 10 === 0
 }
 
-function getAddends(number){
-  var stringArray = number.toString().split("");
-  var counter = stringArray.length%2;
-  return result = stringArray.map(function(element){
+function getAddends(number) {
+  var stringArray = number.toString().split("").reverse();
+  return stringArray.map(function (element, index) {
     var num = parseInt(element);
-    if (counter%2===0) num*=2;
-    counter++;
-    if (num < 10) return num;
-    return num-9;
-  })
+    if (index % 2 === 1) num *= 2;
+    return num < 10 ? num : num - 9;
+  }).reverse();
 }
 
-Luhn.create = function(number){
-  for(var i=0; i<10; i++){
-    var newNumber = number*10+i;
+Luhn.create = function (number) {
+  for (var i = 0; i < 10; i++) {
+    var newNumber = number * 10 + i;
     var testLuhn = new Luhn(newNumber);
     if (testLuhn.valid) return newNumber;
   }
 }
+
+module.exports = Luhn;
