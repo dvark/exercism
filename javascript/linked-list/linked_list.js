@@ -1,72 +1,68 @@
-function Cell(value, prev, next){
+function Node(value, prev, next) {
   this.value = value;
-  this.prev = prev;
-  this.next = next;
+  this.prev = prev || this;
+  this.next = next || this;
 }
 
-function List(){
+function List() {
   this.counter = 0;
-  this.pointer = undefined;
+  this.head = null;
 }
 
-List.prototype.push = function(value){
-  this.counter++;
-  if(this.pointer){
-    var cell = new Cell(value, this.pointer, this.pointer.next);
-    if(this.pointer.next) this.pointer.next.prev = cell;
-    this.pointer.next = cell;
-    this.pointer = cell;
+List.prototype.push = function (value) {
+  if (this.head) {
+    var back = this.head.prev;
+    var node = new Node(value, back, this.head);
+    back.next = node;
+    this.head.prev = node;
   } else {
-    this.pointer = new Cell(value, undefined, undefined);
+    this.head = new Node(value);
   }
 }
 
-List.prototype.pop = function(){
-  this.counter--;
-  var output = this.pointer;
-  if(output){
-    if(this.pointer.next) this.pointer.next.prev = this.pointer.prev;
-    if(this.pointer.prev) this.pointer.prev.next = this.pointer.next;
-    this.pointer = this.pointer.prev;
-    return output.value;
-  }
-}
-
-List.prototype.unshift = function(value){
-  this.counter++;
-  if(this.pointer){
-    var cell = new Cell(value, this.pointer.prev, this.pointer);
-    if(this.pointer.prev) this.pointer.prev.next = cell;
-    this.pointer.prev = cell;
+List.prototype.pop = function () {
+  if (!this.head) return undefined;
+  var back = this.head.prev;
+  var value = back.value;
+  if (back === this.head) {
+    this.head = null;
   } else {
-    this.pointer = new Cell(value, undefined, undefined);
+    this.head.prev = back.prev;
+    this.head.prev.next = this.head;
   }
+  return value;
 }
 
-// List.prototype.shift = function(){
-//   this.counter--;
-//   var output = this.pointer.prev;
-//   if(output){
-//     var outputValue = this.pointer.prev.value;
-//     if(output.prev) this.pointer.prev.prev.next = this.pointer;
-//     this.pointer.prev = this.pointer.prev.prev;
-//     return outputValue;
-//   }
-// }
-
-List.prototype.count = function(){
-  return this.counter;
+List.prototype.shift = function () {
+  this.head = this.head.next;
+  return this.pop();
 }
 
-// List.prototype.delete = function(value){
-//   this.counter--;
-//   var current = this.last;
-//   do {
-//     if(current.value === value) break;
-//     current = current.prev;
-//   } while(current);
-//   if(current.prev) current.prev.next = current.next;
-//   if(current.next) current.next.prev = current.prev;
-// }
+List.prototype.unshift = function (value) {
+  this.push(value);
+  this.head = this.head.prev;
+}
+
+List.prototype.count = function () {
+  if (!this.head) return 0;
+  var counter = 1; // Counting this.head
+  var nextNode = this.head.next;
+  while (nextNode !== this.head) {
+    counter++;
+    nextNode = nextNode.next
+  }
+  return counter;
+}
+
+List.prototype.delete = function (value) {
+  var nextNode = this.head;
+  while(nextNode.value !== value){
+    nextNode = nextNode.next;
+  }
+  var head = this.head;
+  this.head = nextNode;
+  this.shift();
+  this.head = head;
+}
 
 module.exports = List;
