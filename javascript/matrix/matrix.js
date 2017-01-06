@@ -8,15 +8,7 @@ function formatRowString(rowString){
 }
 
 function getColumns(matrix) {
-    var result = [];
-    for(var i=0; i<matrix[0].length; i++) {
-        var column = [];
-        for(var j=0; j<matrix.length; j++) {
-            column.push(matrix[j][i]);
-        }
-        result.push(column);
-    }
-    return result;
+    return matrix[0].map((el, i) => matrix.map((row, j) => matrix[j][i]))
 }
 
 module.exports = Matrix;
