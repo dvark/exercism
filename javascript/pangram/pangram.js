@@ -1,20 +1,10 @@
+// Refactored after looking at http://exercism.io/submissions/80d860c39fa04380b16aca3e667dd703
 function Pangram(sentence) {
-    this.sentence = sentence;
+    this.charSet = new Set(sentence.toLowerCase().replace(/[^a-z]/g, ''));;
 }
 
 Pangram.prototype.isPangram = function(){
-    var letters = this.sentence.toLowerCase().replace(/[^a-z]/g, '').split('');
-    var uniqueLetters = [];
-    letters.forEach(function(letter){
-        if(uniqueLetters.indexOf(letter) < 0){
-            uniqueLetters.push(letter);
-        }
-    });
-
-    if(uniqueLetters.length === 26) {
-        return true;
-    }
-    return false;
+    return this.charSet.size === 26;
 }
 
 module.exports = Pangram;
