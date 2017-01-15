@@ -1,3 +1,5 @@
+// Source for this refactoring: http://exercism.io/submissions/42f1402a40ab4b7687f5266acdc22669
+
 module.exports = Series;
 
 function Series(input){
@@ -12,11 +14,7 @@ Series.prototype.slices = function(size){
   if(size > this.digits.length) throw 'Slice size is too big.';
   var result = [];
   for(var i=0; i<=this.digits.length-size; i++){
-    var series = [];
-    for(var j=0; j<size; j++){
-      series.push(this.digits[i+j]);
-    }
-    result.push(series);
+    result.push(this.digits.slice(i, i+size));
   }
   return result;
 }
