@@ -14,7 +14,7 @@ describe('TwoBucket', function(){
       expect(twoBucket.otherBucket).toEqual(5); //leftover value in the "other" bucket once the goal has been reached
     });
 
-    xit('starting with bucket two', function(){
+    it('starting with bucket two', function(){
       var starterBuck = 'two';
       var twoBucket = new TwoBucket(buckOne,buckTwo,goal,starterBuck);
       expect(twoBucket.moves()).toEqual(8);
