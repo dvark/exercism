@@ -8,7 +8,6 @@ function Matrix(input) {
 Matrix.prototype = Object.create(BasicMatrix.prototype);
 
 Matrix.prototype.getSaddlePoints = function(){
-    console.log(this.rows)
     var saddlePoints = [];
     for(var i=0; i<this.rows.length; i++){
         for(var j=0; j<this.rows[i].length; j++){
