@@ -2,33 +2,27 @@ package clock
 
 import "fmt"
 
-const testVersion = 4
+const (
+	testVersion   = 4
+	minutesInHour = 60
+	minutesInDay  = 24 * minutesInHour
+)
 
-// Clock holds hours and minutes.
-type Clock struct {
-	Hour, Minute int
+// Clock holds the minutes since midnight
+type Clock int
+
+// New creates a new clock by converting to minutes and normalizing
+func New(hours, minutes int) Clock {
+	allMinutes := hours*minutesInHour + minutes
+	return Clock((minutesInDay + allMinutes%minutesInDay) % minutesInDay)
 }
 
-// New creates a new clock.
-func New(hour, minute int) Clock {
-	for minute < 0 {
-		minute += 60
-		hour--
-	}
-	for hour < 0 {
-		hour += 24
-	}
-	hour = (hour + minute/60) % 24
-	minute = minute % 60
-	return Clock{hour, minute}
-}
-
-// String returns the values of Clock as a formatted string.
+// String returns the Clock formatted as hours and minutes
 func (clock Clock) String() string {
-	return fmt.Sprintf("%02d:%02d", clock.Hour, clock.Minute)
+	return fmt.Sprintf("%02d:%02d", clock/minutesInHour, clock%minutesInHour)
 }
 
-// Add adds minutes to the clock
+// Add adds minutes to a clock
 func (clock Clock) Add(minutes int) Clock {
-	return New(clock.Hour, clock.Minute+minutes)
+	return New(0, int(clock)+minutes)
 }
