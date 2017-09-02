@@ -1,12 +1,15 @@
 var Bob = function () { };
 
 Bob.prototype.hey = function (input) {
-  if (input === input.toUpperCase() && /[a-z]/i.test(input)) {
-    return "Whoa, chill out!";
-  } else if (input.slice(-1) === "?") {
-    return "Sure.";
-  } else if (/^\s*$/.test(input)) {
+  input = input.trim()
+  if (!input) {
     return "Fine. Be that way!";
+  }
+  if (input === input.toUpperCase() && input != input.toLowerCase()) {
+    return "Whoa, chill out!";
+  }
+  if (input.slice(-1) === "?") {
+    return "Sure.";
   }
   return "Whatever.";
 };
