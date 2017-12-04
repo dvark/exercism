@@ -2,61 +2,46 @@ package queenattack
 
 import (
 	"errors"
-	"fmt"
-	"strconv"
 )
 
 const testVersion = 2
 
-type position struct {
-	x, y int
-}
-
-func (p position) String() string {
-	return fmt.Sprintf("%v %v", p.x, p.y)
-}
-
-func CanQueenAttack(input1 string, input2 string) (bool, error) {
-	pos1, err1 := positonFromString(input1)
-	pos2, err2 := positonFromString(input2)
-	if err1 != nil || err2 != nil {
-		return false, errors.New("could not convert")
+// CanQueenAttack checks whether the queens on the given fields can attack each other
+func CanQueenAttack(white string, black string) (bool, error) {
+	if !valid(white) || !valid(black) {
+		return false, errors.New("invalid input")
 	}
-	if pos1.String() == pos2.String() {
-		return false, errors.New("Same position")
+	// same position
+	if white == black {
+		return false, errors.New("same position")
 	}
-
-	if pos1.x == pos2.x || pos1.y == pos2.y {
+	// same row or column
+	if white[0] == black[0] || white[1] == black[1] {
 		return true, nil
 	}
-	if absInt(pos1.x-pos2.x) == absInt(pos1.y-pos2.y) {
+	// same diagonal
+	if distance(white[0], black[0]) == distance(white[1], black[1]) {
 		return true, nil
 	}
 	return false, nil
 }
 
-func positonFromString(input string) (position, error) {
-	if len(input) != 2 {
-		return position{}, errors.New("wrong string length")
+func valid(pos string) bool {
+	if len(pos) != 2 {
+		return false
 	}
-	x := int(input[:1][0]) - 96
-	y, err := strconv.Atoi(input[1:])
-	if err != nil {
-		return position{}, err
+	if pos[0] < 'a' || pos[0] > 'h' {
+		return false
 	}
-	if outOfRange(x) || outOfRange(y) {
-		return position{}, errors.New("position out of range")
+	if pos[1] < '1' || pos[1] > '8' {
+		return false
 	}
-	return position{x, y}, nil
+	return true
 }
 
-func outOfRange(n int) bool {
-	return n < 1 || n > 8
-}
-
-func absInt(n int) int {
-	if n < 0 {
-		n = -n
+func distance(a, b byte) byte {
+	if a < b {
+		a, b = b, a
 	}
-	return n
+	return a - b
 }
